@@ -1,0 +1,15 @@
+﻿using System.Linq.Expressions;
+
+namespace Domain.Interfaces.Generic
+{
+    public interface IGenericRepository<T>
+    {
+        Task<T?> GetAsync(Guid Id, CancellationToken cancellationToken);
+        Task<List<T>> GetAllAsync(CancellationToken cancellationToken);
+        Task<List<T>> FindAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken);
+        Task<bool> AnyAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken);
+        void AddAsync(T item);
+        void UpdateAsync(T item);
+        void RemoveAsync(T item);
+    }
+}
