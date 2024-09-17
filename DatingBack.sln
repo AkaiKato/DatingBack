@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatingBack", "DatingBack\DatingBack.csproj", "{C3AD3F33-99E9-4318-A0B8-F500F5051FD4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatingBack", "DatingBack\DatingBack.csproj", "{C3AD3F33-99E9-4318-A0B8-F500F5051FD4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{16E93E34-ECBF-4148-9D84-22A868EBFB73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{16E93E34-ECBF-4148-9D84-22A868EBFB73}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessEF", "DataAccessEF\DataAccessEF.csproj", "{72694EF9-0B88-4CB1-B8D4-D7D947200BD5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessEF", "DataAccessEF\DataAccessEF.csproj", "{72694EF9-0B88-4CB1-B8D4-D7D947200BD5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

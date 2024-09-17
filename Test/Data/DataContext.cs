@@ -3,12 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessEF.Data
 {
-    public class DataContext: DbContext
+    public class DataContext(DbContextOptions<DataContext> options) : DbContext(options)
     {
-        public DataContext(DbContextOptions options) : base(options)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //Database.EnsureCreated();
+            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=DatingDb;Username=postgres;Password=Karine1617");
         }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
