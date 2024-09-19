@@ -8,8 +8,8 @@ namespace Domain.Interfaces.Generic
         Task<List<T>> GetAllAsync(CancellationToken cancellationToken);
         Task<List<T>> FindAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken);
         Task<bool> AnyAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken);
-        void AddAsync(T item);
-        void UpdateAsync(T item);
-        void RemoveAsync(T item);
+        void Add(T item);
+        void Update(T item);
+        void Remove(T item);
     }
 }

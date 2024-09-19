@@ -23,27 +23,29 @@ namespace DataAccessEF.GenericRepositoryClass
         {
             return await _context.Set<T>().ToListAsync(cancellationToken);
         }
+
         public async Task<List<T>> FindAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken)
         {
             return await _context.Set<T>().Where(expression).ToListAsync(cancellationToken);
         }
+
         public async Task<bool> AnyAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken)
         {
             return await _context.Set<T>().AnyAsync(expression, cancellationToken);
         }
 
-        public void AddAsync(T item)
+        public void Add(T item)
         {
-            _context.Set<T>().AddAsync(item);
+            _context.Set<T>().Add(item);
         }
 
-        public void UpdateAsync(T item)
+        public void Update(T item)
         {
             _context.Entry(item).State = EntityState.Modified;
             _context.Set<T>().Update(item);
         }
 
-        public void RemoveAsync(T item)
+        public void Remove(T item)
         {
             _context.Set<T>().Remove(item);
         }
