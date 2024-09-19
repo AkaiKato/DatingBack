@@ -51,10 +51,10 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 
-
 builder.Services.AddDbContext<DataContext>(options =>
 {
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionPostgre"));
+    //options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionPostgre"));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("LocalConnectionPostgre"));
 });
 var app = builder.Build();
 
