@@ -19,6 +19,11 @@ namespace DataAccessEF.GenericRepositoryClass
             return await _context.Set<T>().FindAsync(Id, cancellationToken);
         }
 
+        public async Task<T?> GetAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken)
+        {
+            return await _context.Set<T>().FirstOrDefaultAsync(expression, cancellationToken);
+        }
+
         public async Task<List<T>> GetAllAsync(CancellationToken cancellationToken)
         {
             return await _context.Set<T>().ToListAsync(cancellationToken);
@@ -49,6 +54,5 @@ namespace DataAccessEF.GenericRepositoryClass
         {
             _context.Set<T>().Remove(item);
         }
-
     }
 }

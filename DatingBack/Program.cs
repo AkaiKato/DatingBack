@@ -2,9 +2,12 @@ using DataAccessEF.Data;
 using DataAccessEF.UoW;
 using DatingBack;
 using Domain.Interfaces.UoW;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,11 +53,29 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+builder.Services.AddAuthentication(x =>
+{
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+            builder.Configuration.GetSection("AppSettings:Token").Value!)),
+        ValidateLifetime = true,
+    };
+}
+ );
 
 builder.Services.AddDbContext<DataContext>(options =>
 {
-    //options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionPostgre"));
-    options.UseNpgsql(builder.Configuration.GetConnectionString("LocalConnectionPostgre"));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionPostgre"));
+    //options.UseNpgsql(builder.Configuration.GetConnectionString("LocalConnectionPostgre"));
 });
 var app = builder.Build();
 
@@ -81,6 +102,7 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

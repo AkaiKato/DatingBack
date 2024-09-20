@@ -7,6 +7,8 @@ namespace Domain.Models
     {
         public Guid Id { get; set; }
 
+        public DateOnly RegisterDate { get; set; } = new DateOnly();
+
         public Roles Role {  get; set; }
 
         public string Name { get; set; } = null!;
