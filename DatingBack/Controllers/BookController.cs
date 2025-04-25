@@ -10,7 +10,7 @@ namespace DatingBack.Controllers
     public class BookController(IUnitOfWork unitOfWork) : ControllerBase
     {
         [HttpPost("/createBook")]
-        public async Task<IActionResult> CreateBook([FromBody] CreateBookDto createBookDto, CancellationToken ct)
+        public async Task<IActionResult> CreateBook([FromBody] CreateTagDto createBookDto, CancellationToken ct)
         {
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -43,7 +43,7 @@ namespace DatingBack.Controllers
         }
 
         [HttpPut("/updateBook")]
-        public async Task<IActionResult> UpdateBook([FromBody] UpdateBookDto updateBookDto, CancellationToken ct)
+        public async Task<IActionResult> UpdateBook([FromBody] UpdateTagDto updateBookDto, CancellationToken ct)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

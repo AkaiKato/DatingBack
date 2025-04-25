@@ -7,5 +7,7 @@
         public string Title { get; set; } = null!;
 
         public string Description { get; set; } = string.Empty;
+
+        public List<Profile>? Profiles { get; set; }
     }
 }

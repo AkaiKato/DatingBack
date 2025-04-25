@@ -1,6 +1,6 @@
 ﻿namespace Domain.DTO.Book
 {
-    public class UpdateBookDto
+    public class UpdateTagDto
     {
         public Guid Id { get; set; }
 
