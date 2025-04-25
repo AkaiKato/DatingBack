@@ -43,7 +43,7 @@ namespace DatingBack.Controllers
         }
 
         [HttpPut("/updateInterest")]
-        public async Task<IActionResult> UpdateBook([FromBody] UpdateTagDto updateInterestDto, CancellationToken ct)
+        public async Task<IActionResult> UpdateInterest([FromBody] UpdateTagDto updateInterestDto, CancellationToken ct)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -69,7 +69,7 @@ namespace DatingBack.Controllers
         }
 
         [HttpDelete("/deleteInterest")]
-        public async Task<IActionResult> DeleteBook([FromQuery] Guid interestId, CancellationToken ct)
+        public async Task<IActionResult> DeleteInterest([FromQuery] Guid interestId, CancellationToken ct)
         {
             var deletedInterest = await unitOfWork.InterestRepository.GetAsync(interestId, ct);
 
