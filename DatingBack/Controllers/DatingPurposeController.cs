@@ -35,7 +35,7 @@ namespace DatingBack.Controllers
         }
 
         [HttpGet("/getAllDatingPurposes")]
-        public async Task<IActionResult> GetAllBooks(CancellationToken ct)
+        public async Task<IActionResult> GetAllDatingPurposes(CancellationToken ct)
         {
             var allBooks = await unitOfWork.DatingPurposeRepository.GetAllAsync(ct);
 
@@ -43,7 +43,7 @@ namespace DatingBack.Controllers
         }
 
         [HttpPut("/updateDatingPurpose")]
-        public async Task<IActionResult> UpdateBook([FromBody] UpdateTagDto updateDatingPurposeDto, CancellationToken ct)
+        public async Task<IActionResult> UpdateDatingPurposes([FromBody] UpdateTagDto updateDatingPurposeDto, CancellationToken ct)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -69,7 +69,7 @@ namespace DatingBack.Controllers
         }
 
         [HttpDelete("/deleteDatingPurpose")]
-        public async Task<IActionResult> DeleteBook([FromQuery] Guid datingPurposeId, CancellationToken ct)
+        public async Task<IActionResult> DeleteDatingPurposes([FromQuery] Guid datingPurposeId, CancellationToken ct)
         {
             var deletedDatingPurpose = await unitOfWork.DatingPurposeRepository.GetAsync(datingPurposeId, ct);
 
