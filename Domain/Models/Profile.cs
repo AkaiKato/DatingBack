@@ -1,4 +1,6 @@
-﻿namespace Domain.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Domain.Models
 {
     public class Profile
     {
@@ -16,16 +18,19 @@
 
         public string? Work { get; set; }
 
-        public string? DatingPurpose { get; set; }
+        public Guid? DatingPurposeId { get; set; }
 
-        public List<PersonalTag> PersonalTags { get; set; } = [];
+        [ForeignKey(nameof(DatingPurposeId))]
+        public DatingPurpose? DatingPurpose { get; set; }
 
-        public List<Interest> Interests { get; set; } = [];
+        public List<PersonalTagProfile> PersonalTags { get; set; } = [];
 
-        public List<Musican> Musicans { get; set; } = [];
+        public List<InterestProfile> Interests { get; set; } = [];
 
-        public List<TVMedia> TVMedias { get; set; } = [];
+        public List<MusicanProfile> Musicans { get; set; } = [];
 
-        public List<Book> Books { get; set; } = [];
+        public List<TVMediaProfile> TVMedias { get; set; } = [];
+
+        public List<BookProfile> Books { get; set; } = [];
     }
 }

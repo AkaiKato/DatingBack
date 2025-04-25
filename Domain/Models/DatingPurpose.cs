@@ -1,13 +1,11 @@
 ﻿namespace Domain.Models
 {
-    public class Book
+    public class DatingPurpose
     {
         public Guid Id { get; set; }
 
         public string Title { get; set; } = null!;
 
         public string Description { get; set; } = string.Empty;
-
-        public List<BookProfile>? Profiles { get; set; }
     }
 }

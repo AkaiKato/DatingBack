@@ -31,6 +31,18 @@ namespace DataAccessEF.UoW
 
         public IUserRepository UserRepository { get; private set; }
 
+        public IBookProfileRepository BookProfileRepository { get; private set; }
+
+        public IInterestProfileRepository InterestProfileRepository { get; private set; }
+
+        public IMusicanProfileRepository MusicanProfileRepository { get; private set; }
+
+        public IPersonalTagProfileRepository PersonalTagProfileRepository { get; private set; }
+
+        public ITVMediaProfileRepository TVMediaProfileRepository { get; private set; }
+
+        public IDatingPurposeRepository DatingPurposeRepository { get; private set; }
+
         public UnitOfWork(DataContext context)
         {
             _context = context;
@@ -45,6 +57,12 @@ namespace DataAccessEF.UoW
             SearchSettingsRepository = new SearchSettingsRepository(_context);
             TVMediaRepository = new TVMediaRepository(_context);
             UserRepository = new UserRepository(_context);
+            BookProfileRepository = new BookProfileRepository(_context);
+            InterestProfileRepository = new InterestProfileRepository(_context);
+            MusicanProfileRepository = new MusicanProfileRepository(_context);
+            PersonalTagProfileRepository = new PersonalTagProfileRepository(_context);
+            TVMediaProfileRepository = new TVMediaProfileRepository(_context);
+            DatingPurposeRepository = new DatingPurposeRepository(_context);
         }
 
         public void Dispose()

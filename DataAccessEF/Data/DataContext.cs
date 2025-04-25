@@ -21,6 +21,11 @@ namespace DataAccessEF.Data
         public DbSet<Musican> Musicans { get; set; }
         public DbSet<Interest> Interests { get; set; }
         public DbSet<PersonalTag> PersonalTags { get; set; }
+        public DbSet<BookProfile> BookProfiles { get; set; }
+        public DbSet<TVMediaProfile> TVMediaProfiles { get; set; }
+        public DbSet<MusicanProfile> MusicanProfiles { get; set; }
+        public DbSet<InterestProfile> InterestProfiles { get; set; }
+        public DbSet<PersonalTagProfile> PersonalTagProfiles { get; set; }
         #endregion
 
         public DbSet<User> Users { get; set; }
@@ -34,6 +39,8 @@ namespace DataAccessEF.Data
         public DbSet<ProfileMedia> ProfileMedias { get; set; }
 
         public DbSet<SearchSetting> SearchSettings { get; set; }
+
+        public DbSet<DatingPurpose> DatingPurpose { get; set; }
         #endregion
     }
 }
