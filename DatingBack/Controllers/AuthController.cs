@@ -52,7 +52,7 @@ namespace DatingBack.Controllers
                 TelephoneNumber = userRegister.TelephoneNumber,
                 Password = BCrypt.Net.BCrypt.HashPassword(userRegister.Password),
                 Sex = userRegister.Sex,
-                Role = Roles.User
+                Role = Roles.User,
             };
 
             _unitOfWork.UserRepository.Add(userMap);

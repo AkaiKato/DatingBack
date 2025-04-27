@@ -9,7 +9,7 @@ namespace DatingBack.Controllers
     [ApiController]
     public class DatingPurposeController(IUnitOfWork unitOfWork) : ControllerBase
     {
-        [HttpPost("/createDatingPurpose")]
+        [HttpPost("createDatingPurpose")]
         public async Task<IActionResult> CreateDatingPurpose([FromBody] CreateTagDto createDatingPurposeDto, CancellationToken ct)
         {
             if (!ModelState.IsValid)
@@ -34,7 +34,7 @@ namespace DatingBack.Controllers
             return Ok("ok");
         }
 
-        [HttpGet("/getAllDatingPurposes")]
+        [HttpGet("getAllDatingPurposes")]
         public async Task<IActionResult> GetAllDatingPurposes(CancellationToken ct)
         {
             var allBooks = await unitOfWork.DatingPurposeRepository.GetAllAsync(ct);
@@ -42,7 +42,7 @@ namespace DatingBack.Controllers
             return Ok(allBooks);
         }
 
-        [HttpPut("/updateDatingPurpose")]
+        [HttpPut("updateDatingPurpose")]
         public async Task<IActionResult> UpdateDatingPurposes([FromBody] UpdateTagDto updateDatingPurposeDto, CancellationToken ct)
         {
             if (!ModelState.IsValid)
@@ -68,7 +68,7 @@ namespace DatingBack.Controllers
             return Ok("Suc Updated");
         }
 
-        [HttpDelete("/deleteDatingPurpose")]
+        [HttpDelete("deleteDatingPurpose")]
         public async Task<IActionResult> DeleteDatingPurposes([FromQuery] Guid datingPurposeId, CancellationToken ct)
         {
             var deletedDatingPurpose = await unitOfWork.DatingPurposeRepository.GetAsync(datingPurposeId, ct);

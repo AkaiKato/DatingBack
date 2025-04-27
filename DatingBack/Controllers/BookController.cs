@@ -9,7 +9,7 @@ namespace DatingBack.Controllers
     [ApiController]
     public class BookController(IUnitOfWork unitOfWork) : ControllerBase
     {
-        [HttpPost("/createBook")]
+        [HttpPost("createBook")]
         public async Task<IActionResult> CreateBook([FromBody] CreateTagDto createBookDto, CancellationToken ct)
         {
             if(!ModelState.IsValid)
@@ -34,7 +34,7 @@ namespace DatingBack.Controllers
             return Ok("ok");
         }
 
-        [HttpGet("/getAllBooks")]
+        [HttpGet("getAllBooks")]
         public async Task<IActionResult> GetAllBooks(CancellationToken ct)
         {
             var allBooks = await unitOfWork.BookRepository.GetAllAsync(ct);
@@ -42,7 +42,7 @@ namespace DatingBack.Controllers
             return Ok(allBooks);
         }
 
-        [HttpPut("/updateBook")]
+        [HttpPut("updateBook")]
         public async Task<IActionResult> UpdateBook([FromBody] UpdateTagDto updateBookDto, CancellationToken ct)
         {
             if (!ModelState.IsValid)
@@ -68,7 +68,7 @@ namespace DatingBack.Controllers
             return Ok("Suc Updated");
         }
 
-        [HttpDelete("/deleteBook")]
+        [HttpDelete("deleteBook")]
         public async Task<IActionResult> DeleteBook([FromQuery] Guid bookId, CancellationToken ct)
         {
             var deletedBook = await unitOfWork.BookRepository.GetAsync(bookId, ct);

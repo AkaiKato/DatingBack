@@ -9,7 +9,7 @@ namespace DatingBack.Controllers
     [ApiController]
     public class InterestController(IUnitOfWork unitOfWork) : ControllerBase
     {
-        [HttpPost("/createInterest")]
+        [HttpPost("createInterest")]
         public async Task<IActionResult> CreateInterest([FromBody] CreateTagDto createInterestDto, CancellationToken ct)
         {
             if (!ModelState.IsValid)
@@ -34,7 +34,7 @@ namespace DatingBack.Controllers
             return Ok("ok");
         }
 
-        [HttpGet("/getAllInterests")]
+        [HttpGet("getAllInterests")]
         public async Task<IActionResult> GetAllInterest(CancellationToken ct)
         {
             var allInterest = await unitOfWork.InterestRepository.GetAllAsync(ct);
@@ -42,7 +42,7 @@ namespace DatingBack.Controllers
             return Ok(allInterest);
         }
 
-        [HttpPut("/updateInterest")]
+        [HttpPut("updateInterest")]
         public async Task<IActionResult> UpdateInterest([FromBody] UpdateTagDto updateInterestDto, CancellationToken ct)
         {
             if (!ModelState.IsValid)
@@ -68,7 +68,7 @@ namespace DatingBack.Controllers
             return Ok("Suc Updated");
         }
 
-        [HttpDelete("/deleteInterest")]
+        [HttpDelete("deleteInterest")]
         public async Task<IActionResult> DeleteInterest([FromQuery] Guid interestId, CancellationToken ct)
         {
             var deletedInterest = await unitOfWork.InterestRepository.GetAsync(interestId, ct);

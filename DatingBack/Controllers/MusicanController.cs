@@ -9,7 +9,7 @@ namespace DatingBack.Controllers
     [ApiController]
     public class MusicanController(IUnitOfWork unitOfWork) : ControllerBase
     {
-        [HttpPost("/createMusican")]
+        [HttpPost("createMusican")]
         public async Task<IActionResult> CreateMusican([FromBody] CreateTagDto createMusicanDto, CancellationToken ct)
         {
             if (!ModelState.IsValid)
@@ -34,7 +34,7 @@ namespace DatingBack.Controllers
             return Ok("ok");
         }
 
-        [HttpGet("/getAllMusicans")]
+        [HttpGet("getAllMusicans")]
         public async Task<IActionResult> GetAllMusican(CancellationToken ct)
         {
             var allMusicans = await unitOfWork.MusicanRepository.GetAllAsync(ct);
@@ -42,7 +42,7 @@ namespace DatingBack.Controllers
             return Ok(allMusicans);
         }
 
-        [HttpPut("/updateInterest")]
+        [HttpPut("updateMusican")]
         public async Task<IActionResult> UpdateMusican([FromBody] UpdateTagDto updateMusicanDto, CancellationToken ct)
         {
             if (!ModelState.IsValid)
@@ -68,7 +68,7 @@ namespace DatingBack.Controllers
             return Ok("Suc Updated");
         }
 
-        [HttpDelete("/deleteMusican")]
+        [HttpDelete("deleteMusican")]
         public async Task<IActionResult> DeleteMusican([FromQuery] Guid musicanId, CancellationToken ct)
         {
             var deletedMusican = await unitOfWork.MusicanRepository.GetAsync(musicanId, ct);
