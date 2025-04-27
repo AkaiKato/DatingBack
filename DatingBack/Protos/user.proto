@@ -2,18 +2,58 @@ syntax = "proto3";
 
 option csharp_namespace = "Domain";
 
+import "google/protobuf/timestamp.proto";
+
 service GrpcUser{
 	rpc HaveThisPhoneNumberRequest (HaveThisPhoneNumber) returns (GrpcBoolAnswer);
+	rpc CreateUserRequest (CreateUser) returns (GrpcGuidAnswer);
+	rpc GetUserWithPhoneNumberRequest (GetUserWithPhoneNumber) returns (UserInfoForAuth);
+	rpc GetUserWithIdRequest (GetUserWithId) returns (UserInfoForAuth);
+	rpc VerifyPassRequest (VerifyPass) returns (GrpcBoolAnswer);
+	rpc SaveUserLoginRequest(UserInfoForAuth) returns (VoidMessage);
 }
 
 message HaveThisPhoneNumber {
 	string telephoneNumber = 1;
 }
 
+message CreateUser{
+	string name = 1;
+	string surname = 2;
+	string telephoneNumber = 3;
+	string password = 4;
+	int32 sex = 5;
+}
+
+message VerifyPass{
+	string id = 1;
+	string loginPass = 2;
+}
+
+message GetUserWithPhoneNumber{
+	string telephoneNumber = 1;
+}
+
+message GetUserWithId{
+	string id = 1;
+}
+
+message GrpcGuidAnswer{
+	string answer = 1;
+}
+
 message GrpcBoolAnswer{
 	bool answer = 1;
 }
 
-message HaveThisPhoneNumberResponce{
-	GrpcBoolAnswer answer = 1;
+message UserInfoForAuth{
+	string id = 1;
+	string telephoneNumber = 2;
+	string role = 3;
+	string refreshToken = 4;
+	google.protobuf.Timestamp tokenCreated = 5;
+	google.protobuf.Timestamp tokenExpires = 6;
 }
+
+message VoidMessage{}
+
