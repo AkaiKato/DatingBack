@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option csharp_namespace = "Domain";
+
+service GrpcUser{
+	rpc HaveThisPhoneNumberRequest (HaveThisPhoneNumber) returns (GrpcBoolAnswer);
+}
+
+message HaveThisPhoneNumber {
+	string telephoneNumber = 1;
+}
+
+message GrpcBoolAnswer{
+	bool answer = 1;
+}
+
+message HaveThisPhoneNumberResponce{
+	GrpcBoolAnswer answer = 1;
+}

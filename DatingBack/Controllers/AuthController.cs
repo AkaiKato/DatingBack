@@ -16,7 +16,7 @@ namespace DatingBack.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IUnitOfWork _unitOfWork;
+        /*private readonly IUnitOfWork _unitOfWork;
         private readonly IConfiguration _configuration;
 
         public AuthController(IUnitOfWork unitOfWork, IConfiguration configuration)
@@ -152,7 +152,7 @@ namespace DatingBack.Controllers
             [
                 new Claim("Id", user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.TelephoneNumber!),
-                new Claim(ClaimTypes.Role, user.Role.ToString()),
+                new Claim("Role", user.Role.ToString()),
             ];
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
@@ -180,6 +180,6 @@ namespace DatingBack.Controllers
         private bool ValidatePassword(string loginPassword, string userPassword)
         {
             return BCrypt.Net.BCrypt.Verify(loginPassword, userPassword);
-        }
+        }*/
     }
 }
