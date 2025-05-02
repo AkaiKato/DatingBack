@@ -19,5 +19,15 @@ namespace DataAccessEF.TypeRepository
         {
             return await _dataContext.Users.AnyAsync(x => x.TelephoneNumber == phoneNumber);
         }
+
+        public async Task<List<User>> GetUsersWithProfile(CancellationToken ct)
+        {
+            return await _dataContext.Users.Include(x => x.Profile).ToListAsync(ct);
+        }
+
+        public async Task<User?> GetUserWithProfile(Guid Id, CancellationToken ct)
+        {
+            return await _dataContext.Users.Include(x => x.Profile).FirstOrDefaultAsync(x => x.Id == Id, ct);
+        }
     }
 }

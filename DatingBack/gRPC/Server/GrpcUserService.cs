@@ -101,6 +101,18 @@ namespace DatingBack.gRPC.Server
         {
             var responce = new GrpcGuidAnswer();
 
+            var profileId = Guid.NewGuid();
+
+            var newProfile = new Profile()
+            {
+                Id = profileId,
+            };
+
+            var newSearchSettings = new SearchSetting()
+            {
+                Id = Guid.NewGuid(),
+            };
+
             var newId = Guid.NewGuid();
 
             var newUser = new User()
@@ -113,10 +125,16 @@ namespace DatingBack.gRPC.Server
                 Sex = (Sex)request.Sex,
                 Role = Roles.User,
                 RegisterDate = DateOnly.FromDateTime(DateTime.UtcNow),
+                ProfileId =newProfile.Id,
+                SearchSettingId = newSearchSettings.Id,
             };
 
+            _unitOfWork.ProfileRepository.Add(newProfile);
+            _unitOfWork.SearchSettingsRepository.Add(newSearchSettings);
             _unitOfWork.UserRepository.Add(newUser);
             await _unitOfWork.SaveAsync(CancellationToken.None);
+
+
 
             responce.Answer = newId.ToString();
             return responce;

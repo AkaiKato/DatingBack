@@ -1,6 +1,9 @@
-﻿namespace Domain.Interfaces.TypedRepositories
+﻿using Domain.Interfaces.Generic;
+using Domain.Models;
+
+namespace Domain.Interfaces.TypedRepositories
 {
-    public interface ISearchSettingsRepository
+    public interface ISearchSettingsRepository : IGenericRepository<SearchSetting>
     {
     }
 }
