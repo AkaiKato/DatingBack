@@ -54,5 +54,10 @@ namespace DataAccessEF.GenericRepositoryClass
         {
             _context.Set<T>().Remove(item);
         }
+
+        public void AddRange(List<T> item)
+        {
+            _context.Set<T>().AddRange(item);
+        }
     }
 }
