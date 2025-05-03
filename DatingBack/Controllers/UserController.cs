@@ -1,4 +1,5 @@
-﻿using Domain.DTO;
+﻿using DatingBack.gRPC.Client;
+using Domain.DTO;
 using Domain.Interfaces.UoW;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +8,7 @@ namespace DatingBack.Controllers
 {
     [Route("/api/[controller]")]
     [ApiController]
-    public class UserController(IUnitOfWork unitOfWork) : ControllerBase
+    public class UserController(IUnitOfWork unitOfWork, IChatDataClient chatDataClient) : ControllerBase
     {
         [HttpGet("getAllUsers")]
         public async Task<IActionResult> GetAllUsers(CancellationToken ct)
@@ -296,6 +297,11 @@ namespace DatingBack.Controllers
                 var like = await unitOfWork.LikedByRepository.GetLike(likeUser.UserId, likeUser.WhoWasLiked);
                 if (like == null)
                     return Ok("Ok");
+
+                var value = await chatDataClient.CreateChat(likeUser.UserId, likeUser.WhoWasLiked);
+
+                if(!value)
+                    return BadRequest("Error when creating chat");
 
                 unitOfWork.LikedByRepository.Remove(like);
                 await unitOfWork.SaveAsync(ct);

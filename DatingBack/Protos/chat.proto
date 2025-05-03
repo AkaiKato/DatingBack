@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option csharp_namespace = "Domain.Chat";
+
+import "google/protobuf/timestamp.proto";
+
+service GrpcChat{
+	rpc CreateChat (CreateChatForThisUsers) returns (VoidMessage);
+}
+
+message CreateChatForThisUsers {
+	string User1 = 1;
+	string User2 = 2;
+}
+
+message VoidMessage{}

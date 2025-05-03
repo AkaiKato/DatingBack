@@ -11,6 +11,7 @@ service GrpcUser{
 	rpc GetUserWithIdRequest (GetUserWithId) returns (UserInfoForAuth);
 	rpc VerifyPassRequest (VerifyPass) returns (GrpcBoolAnswer);
 	rpc SaveUserLoginRequest(UserInfoForAuth) returns (VoidMessage);
+	rpc GetUserForChatWithIdRequest(GetUserWithId) returns (UserInfoForChat);
 }
 
 message HaveThisPhoneNumber {
@@ -53,6 +54,12 @@ message UserInfoForAuth{
 	string refreshToken = 4;
 	google.protobuf.Timestamp tokenCreated = 5;
 	google.protobuf.Timestamp tokenExpires = 6;
+}
+
+message UserInfoForChat{
+	string id = 1;
+	string name = 2;
+	string surname = 3;
 }
 
 message VoidMessage{}

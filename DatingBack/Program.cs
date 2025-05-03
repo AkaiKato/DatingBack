@@ -1,6 +1,7 @@
 using DataAccessEF.Data;
 using DataAccessEF.UoW;
 using DatingBack;
+using DatingBack.gRPC.Client;
 using DatingBack.gRPC.Server;
 using Domain.Interfaces.UoW;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -22,6 +23,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+builder.Services.AddTransient<IChatDataClient, ChatDataClient>();
 
 builder.Services.AddGrpc();
 

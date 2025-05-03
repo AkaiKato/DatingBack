@@ -17,6 +17,26 @@ namespace DatingBack.gRPC.Server
             _unitOfWork = unitOfWork;
         }
 
+        public override async Task<UserInfoForChat> GetUserForChatWithIdRequest(GetUserWithId request, ServerCallContext context)
+        {
+            var responce = new UserInfoForChat();
+            var user = await _unitOfWork.UserRepository.GetAsync(Guid.Parse(request.Id), new CancellationToken());
+
+            if (user == null)
+            {
+                responce.Id = Guid.Empty.ToString();
+                responce.Name = "";
+                responce.Surname = "";
+                return responce;
+            }
+
+            responce.Id = user.Id.ToString();
+            responce.Name = user.Name;
+            responce.Surname = user.Surname;
+
+            return responce;
+        }
+
         public override async Task<UserInfoForAuth> GetUserWithIdRequest(GetUserWithId request, ServerCallContext context)
         {
             var responce = new UserInfoForAuth();
