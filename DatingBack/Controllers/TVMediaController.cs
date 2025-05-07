@@ -1,4 +1,5 @@
 ﻿using Domain.DTO.Book;
+using Domain.DTO.Tags;
 using Domain.Interfaces.UoW;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -39,7 +40,18 @@ namespace DatingBack.Controllers
         {
             var allTVMedias = await unitOfWork.TVMediaRepository.GetAllAsync(ct);
 
-            return Ok(allTVMedias);
+            List<ReturnTag> returnTags = [];
+            foreach (var tVMedia in allTVMedias)
+            {
+                returnTags.Add(new ReturnTag()
+                {
+                    Id = tVMedia.Id,
+                    Title = tVMedia.Title,
+                    Description = tVMedia.Description,
+                });
+            }
+
+            return Ok(returnTags);
         }
 
         [HttpPut("updateTVMedia")]

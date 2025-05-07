@@ -1,4 +1,5 @@
 ﻿using Domain.DTO.Book;
+using Domain.DTO.Tags;
 using Domain.Interfaces.UoW;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -37,9 +38,20 @@ namespace DatingBack.Controllers
         [HttpGet("getAllDatingPurposes")]
         public async Task<IActionResult> GetAllDatingPurposes(CancellationToken ct)
         {
-            var allBooks = await unitOfWork.DatingPurposeRepository.GetAllAsync(ct);
+            var allDatingPurposes = await unitOfWork.DatingPurposeRepository.GetAllAsync(ct);
 
-            return Ok(allBooks);
+            List<ReturnTag> returnTags = [];
+            foreach (var datingPurpose in allDatingPurposes)
+            {
+                returnTags.Add(new ReturnTag()
+                {
+                    Id = datingPurpose.Id,
+                    Title = datingPurpose.Title,
+                    Description = datingPurpose.Description,
+                });
+            }
+
+            return Ok(returnTags);
         }
 
         [HttpPut("updateDatingPurpose")]

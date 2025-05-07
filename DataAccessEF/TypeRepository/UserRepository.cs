@@ -56,7 +56,7 @@ namespace DataAccessEF.TypeRepository
             var liked = await _dataContext.LikedBies.Where(x => x.LikedByUserId == userId).Select(x => x.UserId).ToListAsync(ct);
             var disliked = await _dataContext.DislikedUsers.Where(x => x.UserDislikedId == userId).Select(x => x.UserId).ToListAsync(ct);
 
-            var query = _dataContext.Users.Include(x => x.Profile).Where(x => x.Role == Domain.Enums.DomainEnums.Roles.User && x.Id != userId);
+            var query = _dataContext.Users.Include(x => x.Profile).Where(x => x.Role == Domain.Enums.DomainEnums.Roles.User && x.Id != userId && x.Profile != null && x.Profile.IsDisabled == false);
             var year = DateTime.Now.Year;
 
             query = query.Where(x => (year - x.BirthDate.Year) >= searchSetting.MinAge);

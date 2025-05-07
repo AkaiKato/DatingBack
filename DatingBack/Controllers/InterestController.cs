@@ -1,4 +1,5 @@
 ﻿using Domain.DTO.Book;
+using Domain.DTO.Tags;
 using Domain.Interfaces.UoW;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -39,7 +40,18 @@ namespace DatingBack.Controllers
         {
             var allInterest = await unitOfWork.InterestRepository.GetAllAsync(ct);
 
-            return Ok(allInterest);
+            List<ReturnTag> returnTags = [];
+            foreach (var interest in allInterest)
+            {
+                returnTags.Add(new ReturnTag()
+                {
+                    Id = interest.Id,
+                    Title = interest.Title,
+                    Description = interest.Description,
+                });
+            }
+
+            return Ok(returnTags);
         }
 
         [HttpPut("updateInterest")]

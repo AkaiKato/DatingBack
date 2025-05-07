@@ -1,4 +1,5 @@
 ﻿using Domain.DTO.Book;
+using Domain.DTO.Tags;
 using Domain.Interfaces.UoW;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -39,7 +40,18 @@ namespace DatingBack.Controllers
         {
             var allMusicans = await unitOfWork.MusicanRepository.GetAllAsync(ct);
 
-            return Ok(allMusicans);
+            List<ReturnTag> returnTags = [];
+            foreach (var musican in allMusicans)
+            {
+                returnTags.Add(new ReturnTag()
+                {
+                    Id = musican.Id,
+                    Title = musican.Title,
+                    Description = musican.Description,
+                });
+            }
+
+            return Ok(returnTags);
         }
 
         [HttpPut("updateMusican")]
