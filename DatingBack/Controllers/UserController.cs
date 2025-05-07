@@ -8,8 +8,9 @@ namespace DatingBack.Controllers
 {
     [Route("/api/[controller]")]
     [ApiController]
-    public class UserController(IUnitOfWork unitOfWork, IChatDataClient chatDataClient) : ControllerBase
+    public class UserController(IUnitOfWork unitOfWork, IChatDataClient chatDataClient, Mappings mappings) : ControllerBase
     {
+
         /// <summary>
         /// Получить указанного пользователя
         /// </summary>
@@ -27,95 +28,7 @@ namespace DatingBack.Controllers
             if (user == null || user.Profile == null)
                 return NotFound("No such user");
 
-            List<ReturnTagWithOrder> personalTags = [];
-            foreach (var item in user.Profile.PersonalTags)
-            {
-                personalTags.Add(new ReturnTagWithOrder
-                {
-                    Id = item.PersonalTagId,
-                    Title = item.PersonalTag.Title,
-                    Order = item.Order,
-                });
-            }
-
-            List<ReturnTagWithOrder> interestTags = [];
-            foreach (var item in user.Profile.Interests)
-            {
-                interestTags.Add(new ReturnTagWithOrder
-                {
-                    Id = item.InterestId,
-                    Title = item.Interest.Title,
-                    Order = item.Order,
-                });
-            }
-
-            List<ReturnTagWithOrder> musicanTags = [];
-            foreach (var item in user.Profile.Musicans)
-            {
-                musicanTags.Add(new ReturnTagWithOrder
-                {
-                    Id = item.MusicanId,
-                    Title = item.Musican.Title,
-                    Order = item.Order,
-                });
-            }
-
-            List<ReturnTagWithOrder> tvMediaTags = [];
-            foreach (var item in user.Profile.TVMedias)
-            {
-                tvMediaTags.Add(new ReturnTagWithOrder
-                {
-                    Id = item.TVMediasId,
-                    Title = item.TVMedia.Title,
-                    Order = item.Order,
-                });
-            }
-
-            List<ReturnTagWithOrder> bookTags = [];
-            foreach (var item in user.Profile.Books)
-            {
-                bookTags.Add(new ReturnTagWithOrder
-                {
-                    Id = item.BookId,
-                    Title = item.Book.Title,
-                    Order = item.Order,
-                });
-            }
-
-            List<ReturnProfilePictures> returnProfilePictures = [];
-            foreach (var item in user.Profile.ProfileMedias.OrderBy(x => x.Order))
-            {
-                returnProfilePictures.Add(new ReturnProfilePictures
-                {
-                    Id = item.Id,
-                    Url = item.StrorageUrl,
-                    Order = item.Order,
-                });
-            }
-
-            ReturnUser returnUser = new()
-            {
-                Id = user.Id,
-                Name = user.Name,
-                Surname = user.Surname,
-                ProfileId = user.ProfileId,
-                IsConfirmed = user.Profile.IsConfirmed,
-                AboutMe = user.Profile.AboutMe,
-                Education = user.Profile.Education,
-                Work = user.Profile.Work,
-                ReturnProfilePictures = returnProfilePictures,
-                ReturnDatingPurpose = new ReturnDatingPurpose
-                {
-                    Id = user.Profile.DatingPurpose.Id,
-                    Title = user.Profile.DatingPurpose.Title,
-                    Description = user.Profile.DatingPurpose.Description,
-                },
-                PersonalTag = personalTags,
-                InterestTag = interestTags,
-                MusicanTag = musicanTags,
-                TVMediaTag = tvMediaTags,
-                BookTag = bookTags,
-            };
+            var returnUser = mappings.MapToReturnUser(user);
 
             return Ok(returnUser);
         }
@@ -387,7 +300,7 @@ namespace DatingBack.Controllers
                 return BadRequest(ModelState);
 
             var whoLikedUser = await unitOfWork.LikedByRepository.FindAsync(x => x.UserId == UserId, ct);
-
+            //Доделать
             return Ok(whoLikedUser);
         }
 
@@ -520,7 +433,9 @@ namespace DatingBack.Controllers
 
             var users = await unitOfWork.UserRepository.GetUserBySearchSettings(userId, searchSettings, ct);
 
-            return Ok(users);
+            var returnUsers = mappings.MapToListReturnUser(users);
+
+            return Ok(returnUsers);
         }
     }
 }

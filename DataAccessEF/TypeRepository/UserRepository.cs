@@ -59,11 +59,23 @@ namespace DataAccessEF.TypeRepository
             var liked = await _dataContext.LikedBies.Where(x => x.LikedByUserId == userId).Select(x => x.UserId).ToListAsync(ct);
             var disliked = await _dataContext.DislikedUsers.Where(x => x.UserDislikedId == userId).Select(x => x.UserId).ToListAsync(ct);
 
-            var query = _dataContext.Users.Include(x => x.Profile).Where(x => x.Role == Domain.Enums.DomainEnums.Roles.User && x.Id != userId && x.Profile != null && x.Profile.IsDisabled == false);
-            var year = DateTime.Now.Year;
+            var query = _dataContext.Users.Include(x => x.Profile)
+                .ThenInclude(x => x.PersonalTags).ThenInclude(x => x.PersonalTag)
+                .Include(x => x.Profile)
+                .ThenInclude(x => x.Interests).ThenInclude(x => x.Interest)
+                .Include(x => x.Profile)
+                .ThenInclude(x => x.Musicans).ThenInclude(x => x.Musican)
+                .Include(x => x.Profile)
+                .ThenInclude(x => x.TVMedias).ThenInclude(x => x.TVMedia)
+                .Include(x => x.Profile)
+                .ThenInclude(x => x.Books).ThenInclude(x => x.Book)
+                .Include(x => x.Profile).ThenInclude(x => x.DatingPurpose)
+                .Include(x => x.Profile).ThenInclude(x => x.ProfileMedias)
+                .Where(x => x.Role == Domain.Enums.DomainEnums.Roles.User && x.Id != userId && x.Profile != null && x.Profile.IsDisabled == false);
+            var year = DateOnly.FromDateTime(DateTime.UtcNow);
 
-            query = query.Where(x => (year - x.BirthDate.Year) >= searchSetting.MinAge);
-            query = query.Where(x => (year - x.BirthDate.Year) <= searchSetting.MaxAge);
+            query = query.Where(x => (new DateTime(year.Year, year.Month, year.Day).Year - new DateTime(x.BirthDate.Year, x.BirthDate.Month, x.BirthDate.Day).Year)>= searchSetting.MinAge);
+            query = query.Where(x => (new DateTime(year.Year, year.Month, year.Day).Year - new DateTime(x.BirthDate.Year, x.BirthDate.Month, x.BirthDate.Day).Year) <= searchSetting.MaxAge);
 
             query = query.Where(x => !liked.Contains(x.Id));
             query = query.Where(x => !disliked.Contains(x.Id));
@@ -77,7 +89,6 @@ namespace DataAccessEF.TypeRepository
                     query = query.Where(x => x.Sex == Domain.Enums.DomainEnums.Sex.Female);
                 }
             }
-
 
             return await query.ToListAsync(ct);
         }

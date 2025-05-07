@@ -25,6 +25,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 builder.Services.AddTransient<IChatDataClient, ChatDataClient>();
+builder.Services.AddTransient<Mappings, Mappings>();
 
 builder.Services.AddGrpc();
 
