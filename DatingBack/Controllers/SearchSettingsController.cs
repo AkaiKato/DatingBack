@@ -40,6 +40,7 @@ namespace DatingBack.Controllers
             updSearchSetting.MinAge = searchSetting.MinAge;
             updSearchSetting.MaxAge = searchSetting.MaxAge;
             updSearchSetting.Radius = searchSetting.Radius;
+            updSearchSetting.SearchSex = searchSetting.SearchSex;
 
             unitOfWork.SearchSettingsRepository.Update(updSearchSetting);
             await unitOfWork.SaveAsync(ct);

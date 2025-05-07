@@ -8,5 +8,6 @@ namespace Domain.Interfaces.TypedRepositories
         public Task<bool> HaveThisPhoneNumberAsync(string phoneNumber);
         public Task<List<User>> GetUsersWithProfileAndTags(CancellationToken ct);
         public Task<User?> GetUserWithProfileAndTags(Guid Id, CancellationToken ct);
+        public Task<List<User>> GetUserBySearchSettings(Guid userId, SearchSetting searchSetting, CancellationToken ct);
     }
 }

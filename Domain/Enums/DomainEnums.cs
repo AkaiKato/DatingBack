@@ -20,5 +20,12 @@
             Photo = 0,
             Video = 1,
         }
+
+        public enum SearchSex
+        {
+            Male = 0,
+            Female = 1,
+            None = 3,
+        }
     }
 }

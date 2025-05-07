@@ -361,5 +361,26 @@ namespace DatingBack.Controllers
 
             return Ok("Ok");
         }
+
+        [HttpGet("getUsersWithUserSearchFilters")]
+        public async Task<IActionResult> GetUsersWithUserSearchFilters(Guid userId, CancellationToken ct)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var user = await unitOfWork.UserRepository.GetAsync(userId, ct);
+
+            if (user == null || user.SearchSettingId == null)
+                return NotFound("No such user");
+
+            var searchSettings = await unitOfWork.SearchSettingsRepository.GetAsync(user.SearchSettingId.Value, ct);
+
+            if (searchSettings == null) 
+                return BadRequest("Doesn't have search settings");
+
+            var users = await unitOfWork.UserRepository.GetUserBySearchSettings(userId, searchSettings, ct);
+
+            return Ok(users);
+        }
     }
 }

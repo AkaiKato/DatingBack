@@ -131,6 +131,7 @@ namespace DatingBack.gRPC.Server
             var newSearchSettings = new SearchSetting()
             {
                 Id = Guid.NewGuid(),
+                SearchSex = SearchSex.None,
             };
 
             var newId = Guid.NewGuid();
@@ -147,6 +148,7 @@ namespace DatingBack.gRPC.Server
                 RegisterDate = DateOnly.FromDateTime(DateTime.UtcNow),
                 ProfileId =newProfile.Id,
                 SearchSettingId = newSearchSettings.Id,
+                BirthDate = DateOnly.FromDateTime(request.BirthdayDate.ToDateTime()),
             };
 
             _unitOfWork.ProfileRepository.Add(newProfile);

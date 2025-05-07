@@ -10,7 +10,7 @@ namespace DataAccessEF.TypeRepository
     {
         private DataContext _dataContext;
 
-        public UserRepository(DataContext dataContext) : base(dataContext) 
+        public UserRepository(DataContext dataContext) : base(dataContext)
         {
             _dataContext = dataContext;
         }
@@ -49,6 +49,34 @@ namespace DataAccessEF.TypeRepository
                 .ThenInclude(x => x.TVMedias)
                 .Include(x => x.Profile)
                 .ThenInclude(x => x.Books).FirstOrDefaultAsync(x => x.Id == Id, ct);
+        }
+
+        public async Task<List<User>> GetUserBySearchSettings(Guid userId, SearchSetting searchSetting, CancellationToken ct)
+        {
+            var liked = await _dataContext.LikedBies.Where(x => x.LikedByUserId == userId).Select(x => x.UserId).ToListAsync(ct);
+            var disliked = await _dataContext.DislikedUsers.Where(x => x.UserDislikedId == userId).Select(x => x.UserId).ToListAsync(ct);
+
+            var query = _dataContext.Users.Include(x => x.Profile).Where(x => x.Role == Domain.Enums.DomainEnums.Roles.User && x.Id != userId);
+            var year = DateTime.Now.Year;
+
+            query = query.Where(x => (year - x.BirthDate.Year) >= searchSetting.MinAge);
+            query = query.Where(x => (year - x.BirthDate.Year) <= searchSetting.MaxAge);
+
+            query = query.Where(x => !liked.Contains(x.Id));
+            query = query.Where(x => !disliked.Contains(x.Id));
+
+            if (searchSetting.SearchSex != Domain.Enums.DomainEnums.SearchSex.None)
+            {
+                if (searchSetting.SearchSex == Domain.Enums.DomainEnums.SearchSex.Male)
+                    query = query.Where(x => x.Sex == Domain.Enums.DomainEnums.Sex.Male);
+                else
+                {
+                    query = query.Where(x => x.Sex == Domain.Enums.DomainEnums.Sex.Female);
+                }
+            }
+
+
+            return await query.ToListAsync(ct);
         }
     }
 }

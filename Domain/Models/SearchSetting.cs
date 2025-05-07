@@ -1,4 +1,6 @@
-﻿namespace Domain.Models
+﻿using static Domain.Enums.DomainEnums;
+
+namespace Domain.Models
 {
     public class SearchSetting
     {
@@ -11,5 +13,7 @@
         public int MaxAge { get; set; } = 130;
 
         public int Radius { get; set; }
+
+        public SearchSex SearchSex { get; set; }
     }
 }

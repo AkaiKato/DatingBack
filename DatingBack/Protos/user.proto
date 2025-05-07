@@ -24,6 +24,7 @@ message CreateUser{
 	string telephoneNumber = 3;
 	string password = 4;
 	int32 sex = 5;
+	google.protobuf.Timestamp birthdayDate = 6;
 }
 
 message VerifyPass{
