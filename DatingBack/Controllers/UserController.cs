@@ -10,17 +10,12 @@ namespace DatingBack.Controllers
     [ApiController]
     public class UserController(IUnitOfWork unitOfWork, IChatDataClient chatDataClient) : ControllerBase
     {
-        [HttpGet("getAllUsers")]
-        public async Task<IActionResult> GetAllUsers(CancellationToken ct)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var users = await unitOfWork.UserRepository.GetUsersWithProfileAndTags(ct);
-
-            return Ok(users);
-        }
-
+        /// <summary>
+        /// Получить указанного пользователя
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         [HttpGet("getUser")]
         public async Task<IActionResult> GetUser(Guid userId, CancellationToken ct)
         {
@@ -29,12 +24,108 @@ namespace DatingBack.Controllers
 
             var user = await unitOfWork.UserRepository.GetUserWithProfileAndTags(userId, ct);
 
-            if (user == null)
+            if (user == null || user.Profile == null)
                 return NotFound("No such user");
 
-            return Ok(user);
+            List<ReturnTagWithOrder> personalTags = [];
+            foreach (var item in user.Profile.PersonalTags)
+            {
+                personalTags.Add(new ReturnTagWithOrder
+                {
+                    Id = item.PersonalTagId,
+                    Title = item.PersonalTag.Title,
+                    Order = item.Order,
+                });
+            }
+
+            List<ReturnTagWithOrder> interestTags = [];
+            foreach (var item in user.Profile.Interests)
+            {
+                interestTags.Add(new ReturnTagWithOrder
+                {
+                    Id = item.InterestId,
+                    Title = item.Interest.Title,
+                    Order = item.Order,
+                });
+            }
+
+            List<ReturnTagWithOrder> musicanTags = [];
+            foreach (var item in user.Profile.Musicans)
+            {
+                musicanTags.Add(new ReturnTagWithOrder
+                {
+                    Id = item.MusicanId,
+                    Title = item.Musican.Title,
+                    Order = item.Order,
+                });
+            }
+
+            List<ReturnTagWithOrder> tvMediaTags = [];
+            foreach (var item in user.Profile.TVMedias)
+            {
+                tvMediaTags.Add(new ReturnTagWithOrder
+                {
+                    Id = item.TVMediasId,
+                    Title = item.TVMedia.Title,
+                    Order = item.Order,
+                });
+            }
+
+            List<ReturnTagWithOrder> bookTags = [];
+            foreach (var item in user.Profile.Books)
+            {
+                bookTags.Add(new ReturnTagWithOrder
+                {
+                    Id = item.BookId,
+                    Title = item.Book.Title,
+                    Order = item.Order,
+                });
+            }
+
+            List<ReturnProfilePictures> returnProfilePictures = [];
+            foreach (var item in user.Profile.ProfileMedias.OrderBy(x => x.Order))
+            {
+                returnProfilePictures.Add(new ReturnProfilePictures
+                {
+                    Id = item.Id,
+                    Url = item.StrorageUrl,
+                    Order = item.Order,
+                });
+            }
+
+            ReturnUser returnUser = new()
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Surname = user.Surname,
+                ProfileId = user.ProfileId,
+                IsConfirmed = user.Profile.IsConfirmed,
+                AboutMe = user.Profile.AboutMe,
+                Education = user.Profile.Education,
+                Work = user.Profile.Work,
+                ReturnProfilePictures = returnProfilePictures,
+                ReturnDatingPurpose = new ReturnDatingPurpose
+                {
+                    Id = user.Profile.DatingPurpose.Id,
+                    Title = user.Profile.DatingPurpose.Title,
+                    Description = user.Profile.DatingPurpose.Description,
+                },
+                PersonalTag = personalTags,
+                InterestTag = interestTags,
+                MusicanTag = musicanTags,
+                TVMediaTag = tvMediaTags,
+                BookTag = bookTags,
+            };
+
+            return Ok(returnUser);
         }
 
+        /// <summary>
+        /// Поставить анкету подтвержденной
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         [HttpPut("setComfirmed")]
         public async Task<IActionResult> SetComfirmed(Guid userId, CancellationToken ct)
         {
@@ -60,6 +151,13 @@ namespace DatingBack.Controllers
             return Ok("Ok");
         }
 
+        /// <summary>
+        /// Изменить состояние анкеты (активна/неактивна)
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="disabled"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         [HttpPut("setDisable")]
         public async Task<IActionResult> SetDisabled(Guid userId, bool disabled, CancellationToken ct)
         {
@@ -85,6 +183,12 @@ namespace DatingBack.Controllers
             return Ok("Ok");
         }
 
+        /// <summary>
+        /// Обновить профиль
+        /// </summary>
+        /// <param name="updateProfile"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         [HttpPost("updateProfile")]
         public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfile updateProfile, CancellationToken ct)
         {
@@ -215,6 +319,12 @@ namespace DatingBack.Controllers
             return Ok("Ok");
         }
 
+        /// <summary>
+        /// Обновить базовую информацию о пользователе
+        /// </summary>
+        /// <param name="updateUserBaseInfo"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         [HttpPost("updateUserBaseInfo")]
         public async Task<IActionResult> UpdateUserBaseInfo([FromBody] UpdateUserBaseInfo updateUserBaseInfo, CancellationToken ct)
         {
@@ -238,6 +348,12 @@ namespace DatingBack.Controllers
             return Ok("Ok");
         }
 
+        /// <summary>
+        /// Изменить пароль
+        /// </summary>
+        /// <param name="changePass"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         [HttpPost("changePass")]
         public async Task<IActionResult> ChangePass([FromBody] UserChangePassModel changePass, CancellationToken ct)
         {
@@ -258,6 +374,12 @@ namespace DatingBack.Controllers
             return Ok("Ok");
         }
 
+        /// <summary>
+        /// Получить список людей кто лайкнул пользователя
+        /// </summary>
+        /// <param name="UserId"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         [HttpGet("getUsersWhoLikedUser")]
         public async Task<IActionResult> GetUsersWhoLikedUser(Guid UserId, CancellationToken ct)
         {
@@ -269,6 +391,12 @@ namespace DatingBack.Controllers
             return Ok(whoLikedUser);
         }
 
+        /// <summary>
+        /// Лайкнуть пользователя
+        /// </summary>
+        /// <param name="likeUser"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         [HttpPost("likeUser")]
         public async Task<IActionResult> LikeUser([FromBody] LikeUser likeUser, CancellationToken ct)
         {
@@ -322,6 +450,12 @@ namespace DatingBack.Controllers
             return Ok("Ok");
         }
 
+        /// <summary>
+        /// Дизлакнуть пользователя
+        /// </summary>
+        /// <param name="dislikeUser"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         [HttpPost("dislikeUser")]
         public async Task<IActionResult> DislikeUser([FromBody] DislikeUser dislikeUser, CancellationToken ct)
         {
@@ -362,6 +496,12 @@ namespace DatingBack.Controllers
             return Ok("Ok");
         }
 
+        /// <summary>
+        /// Получить список пользователей по фильтру пользователя
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         [HttpGet("getUsersWithUserSearchFilters")]
         public async Task<IActionResult> GetUsersWithUserSearchFilters(Guid userId, CancellationToken ct)
         {

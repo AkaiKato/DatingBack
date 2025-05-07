@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -37,6 +38,10 @@ builder.Services.AddSwaggerGen(c =>
         Version = "v1",
         Title = "API",
     });
+
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath);
 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
@@ -101,6 +106,7 @@ app.UseExceptionHandler(exceptionHandlerApp => exceptionHandlerApp.ConfigureExce
 //}
 
 app.UseCors(c => c.AllowAnyOrigin());
+app.UseStaticFiles();
 
 app.UseForwardedHeaders(new ForwardedHeadersOptions
 {

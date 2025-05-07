@@ -13,6 +13,8 @@ namespace Domain.Models
 
         public MediaTypes MediaType { get; set; }
 
+        public int Order {  get; set; }
+
         [ForeignKey(nameof(ProfileId))]
         public Profile Profile { get; set; } = null!;
     }

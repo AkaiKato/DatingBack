@@ -13,7 +13,7 @@ namespace Domain.Models
         public int Order { get; set; }
 
         [ForeignKey(nameof(TVMediasId))]
-        public TVMedia? Book { get; set; }
+        public TVMedia? TVMedia { get; set; }
 
         [ForeignKey(nameof(ProfileId))]
         public Profile? Profile { get; set; }

@@ -13,7 +13,7 @@ namespace Domain.Models
         public int Order { get; set; }
 
         [ForeignKey(nameof(InterestId))]
-        public Interest? Book { get; set; }
+        public Interest? Interest { get; set; }
 
         [ForeignKey(nameof(ProfileId))]
         public Profile? Profile { get; set; }

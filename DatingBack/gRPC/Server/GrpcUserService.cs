@@ -156,8 +156,6 @@ namespace DatingBack.gRPC.Server
             _unitOfWork.UserRepository.Add(newUser);
             await _unitOfWork.SaveAsync(CancellationToken.None);
 
-
-
             responce.Answer = newId.ToString();
             return responce;
         }

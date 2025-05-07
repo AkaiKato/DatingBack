@@ -10,6 +10,12 @@ namespace DatingBack.Controllers
     [ApiController]
     public class MusicanController(IUnitOfWork unitOfWork) : ControllerBase
     {
+        /// <summary>
+        /// Создать музыканта
+        /// </summary>
+        /// <param name="createMusicanDto"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         [HttpPost("createMusican")]
         public async Task<IActionResult> CreateMusican([FromBody] CreateTagDto createMusicanDto, CancellationToken ct)
         {
@@ -35,6 +41,11 @@ namespace DatingBack.Controllers
             return Ok("ok");
         }
 
+        /// <summary>
+        /// Получить всех музыкантов
+        /// </summary>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         [HttpGet("getAllMusicans")]
         public async Task<IActionResult> GetAllMusican(CancellationToken ct)
         {
@@ -54,6 +65,12 @@ namespace DatingBack.Controllers
             return Ok(returnTags);
         }
 
+        /// <summary>
+        /// Обновить музыканта
+        /// </summary>
+        /// <param name="updateMusicanDto"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         [HttpPut("updateMusican")]
         public async Task<IActionResult> UpdateMusican([FromBody] UpdateTagDto updateMusicanDto, CancellationToken ct)
         {
@@ -80,6 +97,12 @@ namespace DatingBack.Controllers
             return Ok("Suc Updated");
         }
 
+        /// <summary>
+        /// Удалить музыканта
+        /// </summary>
+        /// <param name="musicanId"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         [HttpDelete("deleteMusican")]
         public async Task<IActionResult> DeleteMusican([FromQuery] Guid musicanId, CancellationToken ct)
         {

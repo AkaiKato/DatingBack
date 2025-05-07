@@ -10,6 +10,12 @@ namespace DatingBack.Controllers
     [ApiController]
     public class BookController(IUnitOfWork unitOfWork) : ControllerBase
     {
+        /// <summary>
+        /// Создать книгу
+        /// </summary>
+        /// <param name="createBookDto"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         [HttpPost("createBook")]
         public async Task<IActionResult> CreateBook([FromBody] CreateTagDto createBookDto, CancellationToken ct)
         {
@@ -35,6 +41,11 @@ namespace DatingBack.Controllers
             return Ok("ok");
         }
 
+        /// <summary>
+        /// Получить все книги
+        /// </summary>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         [HttpGet("getAllBooks")]
         public async Task<IActionResult> GetAllBooks(CancellationToken ct)
         {
@@ -54,6 +65,12 @@ namespace DatingBack.Controllers
             return Ok(returnTags);
         }
 
+        /// <summary>
+        /// Обновить книгу
+        /// </summary>
+        /// <param name="updateBookDto"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         [HttpPut("updateBook")]
         public async Task<IActionResult> UpdateBook([FromBody] UpdateTagDto updateBookDto, CancellationToken ct)
         {
@@ -80,6 +97,12 @@ namespace DatingBack.Controllers
             return Ok("Suc Updated");
         }
 
+        /// <summary>
+        /// Удалить книгу
+        /// </summary>
+        /// <param name="bookId"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         [HttpDelete("deleteBook")]
         public async Task<IActionResult> DeleteBook([FromQuery] Guid bookId, CancellationToken ct)
         {

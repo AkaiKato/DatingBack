@@ -10,6 +10,12 @@ namespace DatingBack.Controllers
     [ApiController]
     public class InterestController(IUnitOfWork unitOfWork) : ControllerBase
     {
+        /// <summary>
+        /// Создать интерес
+        /// </summary>
+        /// <param name="createInterestDto"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         [HttpPost("createInterest")]
         public async Task<IActionResult> CreateInterest([FromBody] CreateTagDto createInterestDto, CancellationToken ct)
         {
@@ -35,6 +41,11 @@ namespace DatingBack.Controllers
             return Ok("ok");
         }
 
+        /// <summary>
+        /// Получить все интересы
+        /// </summary>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         [HttpGet("getAllInterests")]
         public async Task<IActionResult> GetAllInterest(CancellationToken ct)
         {
@@ -54,6 +65,12 @@ namespace DatingBack.Controllers
             return Ok(returnTags);
         }
 
+        /// <summary>
+        /// Обновить интерес
+        /// </summary>
+        /// <param name="updateInterestDto"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         [HttpPut("updateInterest")]
         public async Task<IActionResult> UpdateInterest([FromBody] UpdateTagDto updateInterestDto, CancellationToken ct)
         {
@@ -80,6 +97,12 @@ namespace DatingBack.Controllers
             return Ok("Suc Updated");
         }
 
+        /// <summary>
+        /// Удалить интерес
+        /// </summary>
+        /// <param name="interestId"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         [HttpDelete("deleteInterest")]
         public async Task<IActionResult> DeleteInterest([FromQuery] Guid interestId, CancellationToken ct)
         {

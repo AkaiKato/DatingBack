@@ -10,6 +10,12 @@ namespace DatingBack.Controllers
     [ApiController]
     public class DatingPurposeController(IUnitOfWork unitOfWork) : ControllerBase
     {
+        /// <summary>
+        /// Создать причину для знакомства
+        /// </summary>
+        /// <param name="createDatingPurposeDto"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         [HttpPost("createDatingPurpose")]
         public async Task<IActionResult> CreateDatingPurpose([FromBody] CreateTagDto createDatingPurposeDto, CancellationToken ct)
         {
@@ -35,6 +41,11 @@ namespace DatingBack.Controllers
             return Ok("ok");
         }
 
+        /// <summary>
+        /// Получить все причины для знакомства
+        /// </summary>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         [HttpGet("getAllDatingPurposes")]
         public async Task<IActionResult> GetAllDatingPurposes(CancellationToken ct)
         {
@@ -54,6 +65,12 @@ namespace DatingBack.Controllers
             return Ok(returnTags);
         }
 
+        /// <summary>
+        /// Обновить причину для знакомства
+        /// </summary>
+        /// <param name="updateDatingPurposeDto"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         [HttpPut("updateDatingPurpose")]
         public async Task<IActionResult> UpdateDatingPurposes([FromBody] UpdateTagDto updateDatingPurposeDto, CancellationToken ct)
         {
@@ -80,6 +97,12 @@ namespace DatingBack.Controllers
             return Ok("Suc Updated");
         }
 
+        /// <summary>
+        /// Удалитб причину для знакомства
+        /// </summary>
+        /// <param name="datingPurposeId"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         [HttpDelete("deleteDatingPurpose")]
         public async Task<IActionResult> DeleteDatingPurposes([FromQuery] Guid datingPurposeId, CancellationToken ct)
         {

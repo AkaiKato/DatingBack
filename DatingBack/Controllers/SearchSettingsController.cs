@@ -1,5 +1,4 @@
-﻿using Domain.DTO;
-using Domain.Interfaces.UoW;
+﻿using Domain.Interfaces.UoW;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +8,12 @@ namespace DatingBack.Controllers
     [ApiController]
     public class SearchSettingsController(IUnitOfWork unitOfWork) : ControllerBase
     {
+        /// <summary>
+        /// Получить настройки поиска ползователя
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         [HttpGet("getUserSearchSettings")]
         public async Task<IActionResult> GetUserSearchSettings(Guid userId, CancellationToken ct)
         {
@@ -25,6 +30,12 @@ namespace DatingBack.Controllers
             return Ok(searchSetting);
         }
 
+        /// <summary>
+        /// Обновить настройки поиска пользователя
+        /// </summary>
+        /// <param name="searchSetting"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         [HttpPut("updateUserSearchSettings")]
         public async Task<IActionResult> UpdateUserSearchSettings([FromBody] SearchSetting searchSetting, CancellationToken ct)
         {
@@ -33,7 +44,7 @@ namespace DatingBack.Controllers
 
             var updSearchSetting = await unitOfWork.SearchSettingsRepository.GetAsync(searchSetting.Id, ct);
 
-            if(updSearchSetting == null)
+            if (updSearchSetting == null)
                 return NotFound("No such SearchSettings");
 
             updSearchSetting.City = searchSetting.City;

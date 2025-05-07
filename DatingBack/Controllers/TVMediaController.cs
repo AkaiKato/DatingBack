@@ -10,6 +10,12 @@ namespace DatingBack.Controllers
     [ApiController]
     public class TVMediaController(IUnitOfWork unitOfWork) : ControllerBase
     {
+        /// <summary>
+        /// Создать ТВМедиа
+        /// </summary>
+        /// <param name="createTVMediaDto"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         [HttpPost("/createTVMedia")]
         public async Task<IActionResult> CreateTVMedia([FromBody] CreateTagDto createTVMediaDto, CancellationToken ct)
         {
@@ -35,6 +41,11 @@ namespace DatingBack.Controllers
             return Ok("ok");
         }
 
+        /// <summary>
+        /// Получить все ТВМедиа
+        /// </summary>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         [HttpGet("getAllTVMedias")]
         public async Task<IActionResult> GetAllTVMedias(CancellationToken ct)
         {
@@ -54,6 +65,12 @@ namespace DatingBack.Controllers
             return Ok(returnTags);
         }
 
+        /// <summary>
+        /// Обновить ТВМедиа
+        /// </summary>
+        /// <param name="updateTVMediaDto"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         [HttpPut("updateTVMedia")]
         public async Task<IActionResult> UpdateTVMedia([FromBody] UpdateTagDto updateTVMediaDto, CancellationToken ct)
         {
@@ -80,6 +97,12 @@ namespace DatingBack.Controllers
             return Ok("Suc Updated");
         }
 
+        /// <summary>
+        /// Удалить ТВМедиа
+        /// </summary>
+        /// <param name="tvMediaId"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         [HttpDelete("deleteTVMedia")]
         public async Task<IActionResult> DeleteTVMedia([FromQuery] Guid tvMediaId, CancellationToken ct)
         {

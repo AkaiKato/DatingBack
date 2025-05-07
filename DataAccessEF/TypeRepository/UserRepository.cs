@@ -40,15 +40,18 @@ namespace DataAccessEF.TypeRepository
         {
             return await _dataContext.Users
                 .Include(x => x.Profile)
-                .ThenInclude(x => x.PersonalTags)
+                .ThenInclude(x => x.PersonalTags).ThenInclude(x => x.PersonalTag)
                 .Include(x => x.Profile)
-                .ThenInclude(x => x.Interests)
+                .ThenInclude(x => x.Interests).ThenInclude(x => x.Interest)
                 .Include(x => x.Profile)
-                .ThenInclude(x => x.Musicans)
+                .ThenInclude(x => x.Musicans).ThenInclude(x => x.Musican)
                 .Include(x => x.Profile)
-                .ThenInclude(x => x.TVMedias)
+                .ThenInclude(x => x.TVMedias).ThenInclude(x => x.TVMedia)
                 .Include(x => x.Profile)
-                .ThenInclude(x => x.Books).FirstOrDefaultAsync(x => x.Id == Id, ct);
+                .ThenInclude(x => x.Books).ThenInclude(x => x.Book)
+                .Include(x => x.Profile).ThenInclude(x => x.DatingPurpose)
+                .Include(x => x.Profile).ThenInclude(x => x.ProfileMedias)
+                .FirstOrDefaultAsync(x => x.Id == Id, ct);
         }
 
         public async Task<List<User>> GetUserBySearchSettings(Guid userId, SearchSetting searchSetting, CancellationToken ct)
