@@ -299,9 +299,9 @@ namespace DatingBack.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var whoLikedUser = await unitOfWork.LikedByRepository.FindAsync(x => x.UserId == UserId, ct);
-            //Доделать
-            return Ok(whoLikedUser);
+            var users = await unitOfWork.LikedByRepository.GetLikedUsers(UserId, ct);
+            var mappedUsers = mappings.MapToListReturnUser(users);
+            return Ok(users);
         }
 
         /// <summary>

@@ -7,5 +7,6 @@ namespace Domain.Interfaces.TypedRepositories
     {
         public Task<bool> IsItMathc(Guid userId, Guid whoWasLiked);
         public Task<LikedBy?> GetLike(Guid userId, Guid whoWasLiked);
+        public Task<List<User>> GetLikedUsers(Guid userId, CancellationToken ct);
     }
 }
