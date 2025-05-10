@@ -71,6 +71,8 @@ namespace DataAccessEF.TypeRepository
                 .ThenInclude(x => x.Books).ThenInclude(x => x.Book)
                 .Include(x => x.Profile).ThenInclude(x => x.DatingPurpose)
                 .Include(x => x.Profile).ThenInclude(x => x.ProfileMedias)
+                .AsNoTracking()
+                .AsSplitQuery()
                 .Where(x => x.Role == Domain.Enums.DomainEnums.Roles.User && x.Id != userId && x.Profile != null && x.Profile.IsDisabled == false);
             var year = DateOnly.FromDateTime(DateTime.UtcNow);
 

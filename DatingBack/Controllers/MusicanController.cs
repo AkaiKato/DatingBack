@@ -16,7 +16,7 @@ namespace DatingBack.Controllers
         /// <param name="createMusicanDto"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        [HttpPost("createMusican")]
+        [HttpPost("Admin/createMusican")]
         public async Task<IActionResult> CreateMusican([FromBody] CreateTagDto createMusicanDto, CancellationToken ct)
         {
             if (!ModelState.IsValid)
@@ -71,7 +71,7 @@ namespace DatingBack.Controllers
         /// <param name="updateMusicanDto"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        [HttpPut("updateMusican")]
+        [HttpPut("Admin/updateMusican")]
         public async Task<IActionResult> UpdateMusican([FromBody] UpdateTagDto updateMusicanDto, CancellationToken ct)
         {
             if (!ModelState.IsValid)
@@ -103,7 +103,7 @@ namespace DatingBack.Controllers
         /// <param name="musicanId"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        [HttpDelete("deleteMusican")]
+        [HttpDelete("Admin/deleteMusican")]
         public async Task<IActionResult> DeleteMusican([FromQuery] Guid musicanId, CancellationToken ct)
         {
             var deletedMusican = await unitOfWork.MusicanRepository.GetAsync(musicanId, ct);

@@ -16,7 +16,7 @@ namespace DatingBack.Controllers
         /// <param name="createTVMediaDto"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        [HttpPost("/createTVMedia")]
+        [HttpPost("Admin/createTVMedia")]
         public async Task<IActionResult> CreateTVMedia([FromBody] CreateTagDto createTVMediaDto, CancellationToken ct)
         {
             if (!ModelState.IsValid)
@@ -71,7 +71,7 @@ namespace DatingBack.Controllers
         /// <param name="updateTVMediaDto"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        [HttpPut("updateTVMedia")]
+        [HttpPut("Admin/updateTVMedia")]
         public async Task<IActionResult> UpdateTVMedia([FromBody] UpdateTagDto updateTVMediaDto, CancellationToken ct)
         {
             if (!ModelState.IsValid)
@@ -103,7 +103,7 @@ namespace DatingBack.Controllers
         /// <param name="tvMediaId"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        [HttpDelete("deleteTVMedia")]
+        [HttpDelete("Admin/deleteTVMedia")]
         public async Task<IActionResult> DeleteTVMedia([FromQuery] Guid tvMediaId, CancellationToken ct)
         {
             var deletedTVMedia = await unitOfWork.TVMediaRepository.GetAsync(tvMediaId, ct);

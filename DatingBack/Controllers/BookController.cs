@@ -16,7 +16,7 @@ namespace DatingBack.Controllers
         /// <param name="createBookDto"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        [HttpPost("createBook")]
+        [HttpPost("Admin/createBook")]
         public async Task<IActionResult> CreateBook([FromBody] CreateTagDto createBookDto, CancellationToken ct)
         {
             if(!ModelState.IsValid)
@@ -71,7 +71,7 @@ namespace DatingBack.Controllers
         /// <param name="updateBookDto"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        [HttpPut("updateBook")]
+        [HttpPut("Admin/updateBook")]
         public async Task<IActionResult> UpdateBook([FromBody] UpdateTagDto updateBookDto, CancellationToken ct)
         {
             if (!ModelState.IsValid)
@@ -103,7 +103,7 @@ namespace DatingBack.Controllers
         /// <param name="bookId"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        [HttpDelete("deleteBook")]
+        [HttpDelete("Admin/deleteBook")]
         public async Task<IActionResult> DeleteBook([FromQuery] Guid bookId, CancellationToken ct)
         {
             var deletedBook = await unitOfWork.BookRepository.GetAsync(bookId, ct);

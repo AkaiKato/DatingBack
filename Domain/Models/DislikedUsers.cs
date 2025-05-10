@@ -15,5 +15,7 @@ namespace Domain.Models
         /// Кто дизлайкнул
         /// </summary>
         public Guid UserDislikedId { get; set; }
+
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }

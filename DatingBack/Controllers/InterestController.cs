@@ -16,7 +16,7 @@ namespace DatingBack.Controllers
         /// <param name="createInterestDto"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        [HttpPost("createInterest")]
+        [HttpPost("Admin/createInterest")]
         public async Task<IActionResult> CreateInterest([FromBody] CreateTagDto createInterestDto, CancellationToken ct)
         {
             if (!ModelState.IsValid)
@@ -71,7 +71,7 @@ namespace DatingBack.Controllers
         /// <param name="updateInterestDto"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        [HttpPut("updateInterest")]
+        [HttpPut("Admin/updateInterest")]
         public async Task<IActionResult> UpdateInterest([FromBody] UpdateTagDto updateInterestDto, CancellationToken ct)
         {
             if (!ModelState.IsValid)
@@ -103,7 +103,7 @@ namespace DatingBack.Controllers
         /// <param name="interestId"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        [HttpDelete("deleteInterest")]
+        [HttpDelete("Admin/deleteInterest")]
         public async Task<IActionResult> DeleteInterest([FromQuery] Guid interestId, CancellationToken ct)
         {
             var deletedInterest = await unitOfWork.InterestRepository.GetAsync(interestId, ct);

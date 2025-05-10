@@ -9,5 +9,7 @@ namespace Domain.Models
         public Guid UserId { get; set; }
 
         public Guid LikedByUserId { get; set; }
+
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }

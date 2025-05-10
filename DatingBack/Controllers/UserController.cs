@@ -39,7 +39,7 @@ namespace DatingBack.Controllers
         /// <param name="userId"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        [HttpPut("setComfirmed")]
+        [HttpPut("Admin/setComfirmed")]
         public async Task<IActionResult> SetComfirmed(Guid userId, CancellationToken ct)
         {
             if (!ModelState.IsValid)

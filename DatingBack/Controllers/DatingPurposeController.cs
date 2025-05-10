@@ -16,7 +16,7 @@ namespace DatingBack.Controllers
         /// <param name="createDatingPurposeDto"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        [HttpPost("createDatingPurpose")]
+        [HttpPost("Admin/createDatingPurpose")]
         public async Task<IActionResult> CreateDatingPurpose([FromBody] CreateTagDto createDatingPurposeDto, CancellationToken ct)
         {
             if (!ModelState.IsValid)
@@ -71,7 +71,7 @@ namespace DatingBack.Controllers
         /// <param name="updateDatingPurposeDto"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        [HttpPut("updateDatingPurpose")]
+        [HttpPut("Admin/updateDatingPurpose")]
         public async Task<IActionResult> UpdateDatingPurposes([FromBody] UpdateTagDto updateDatingPurposeDto, CancellationToken ct)
         {
             if (!ModelState.IsValid)
@@ -98,12 +98,12 @@ namespace DatingBack.Controllers
         }
 
         /// <summary>
-        /// Удалитб причину для знакомства
+        /// Удалить причину для знакомства
         /// </summary>
         /// <param name="datingPurposeId"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        [HttpDelete("deleteDatingPurpose")]
+        [HttpDelete("Admin/deleteDatingPurpose")]
         public async Task<IActionResult> DeleteDatingPurposes([FromQuery] Guid datingPurposeId, CancellationToken ct)
         {
             var deletedDatingPurpose = await unitOfWork.DatingPurposeRepository.GetAsync(datingPurposeId, ct);

@@ -33,8 +33,6 @@ namespace Domain.Models
 
         public List<DislikedUsers> DislikedUsers { get; set; } = [];
 
-        //public List<Chat> Chats { get; set; }
-
         public string RefreshToken { get; set; } = string.Empty;
 
         public DateTime TokenCreated { get; set; }

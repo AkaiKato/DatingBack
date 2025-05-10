@@ -56,10 +56,6 @@ namespace DatingBack.Controllers
             else
                 getLastOrder++;
 
-            var t = AppContext.BaseDirectory;
-            var tt = Directory.GetParent(t);
-            var ttt = Directory.GetParent(tt!.FullName);
-
             using (FileStream fileStream = System.IO.File.Create(newfilePath))
                 pic.CopyTo(fileStream);
 
