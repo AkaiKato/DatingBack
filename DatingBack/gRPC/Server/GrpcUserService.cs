@@ -1,5 +1,4 @@
 ﻿using Domain;
-using Domain.DTO;
 using Domain.Interfaces.UoW;
 using Domain.Models;
 using Google.Protobuf.WellKnownTypes;
@@ -85,7 +84,7 @@ namespace DatingBack.gRPC.Server
             responce.RefreshToken = user.RefreshToken;
             responce.TokenCreated = user.TokenCreated.ToUniversalTime().ToTimestamp();
             responce.TokenExpires = user.TokenExpires.ToUniversalTime().ToTimestamp();
-          
+
             return responce;
         }
 
@@ -146,7 +145,7 @@ namespace DatingBack.gRPC.Server
                 Sex = (Sex)request.Sex,
                 Role = Roles.User,
                 RegisterDate = DateOnly.FromDateTime(DateTime.UtcNow),
-                ProfileId =newProfile.Id,
+                ProfileId = newProfile.Id,
                 SearchSettingId = newSearchSettings.Id,
                 BirthDate = DateOnly.FromDateTime(request.BirthdayDate.ToDateTime()),
             };
